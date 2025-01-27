@@ -10,7 +10,7 @@ The pretrained models are available on [Hugging Face](https://huggingface.co) un
 - [`PSUXL/LLMED-combined`](https://huggingface.co/PSUXL/LLMED-combined)
 
 
-## Usage
+### Usage
 
 These models are trained based on the DNABERT2 model strucuture. Here is an example code snippet to generate embeddings using the PSUXL/LLMED-MAE model:
 ```
@@ -38,9 +38,17 @@ The repository includes code for two experiments:
 
 
 ### Correlation with Edit Distance
-This experiment evaluates the correlation between the model's sequence embeddings and the actual edit distance.
-The codes are at edit_distance/.
+This experiment evaluates the correlation between the distances between sequence embeddings and the actual edit distances.
+The codes are at edit_distance/. To compute the correlation:
+
+```
+cd ./edit_distance
+python3 main.py sampledata PSUXL/LLMED-MAE
+```
 
 ### Similar Sequence Search
-This experiment demonstrates the model's ability to identify top similar sequences for a given sequence.
-The codes are at similar_sequence_search/.
+This experiment demonstrates the model's ability to identify most similar sequences for a given input sequence. The code for this experiment can be found in the similar_sequence_search/ directory. We adopted the pipeline and code from Convolutional Embedding for Edit Distance and integrated our model into the workflow.
+
+```
+python3 main.py --dataset sampledata --nt 100 --nq 100 --save-split --recall --embed bert --model-dir PSUXL/LLMED-MAE
+```

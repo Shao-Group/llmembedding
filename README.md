@@ -1,4 +1,4 @@
-### Introduction
+## Introduction
 This repository holds the code for a genomic large language model designed to produce sequence embeddings approximating the edit distance. It is trained via contrastive
 learning based on a pretrained DNA large laugage model. The details are included in the paper: Edit Distance Embedding with Genomic Large Language Model.
 

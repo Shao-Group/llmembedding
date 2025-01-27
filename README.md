@@ -17,36 +17,25 @@ These models are based on the DNABERT2 pretrained model. Below is an example of 
 
 ## Usage
 
-Here is an example code snippet to generate embeddings using the PSUXL/LLMED-combined model:
+Here is an example code snippet to generate embeddings using the PSUXL/LLMED-MAE model:
 ```
-from transformers import AutoTokenizer, AutoModel
-from safetensors.torch import load_file
 import torch
-import numpy as np
-import os
+from transformers import AutoTokenizer, AutoModel
+from transformers.models.bert.configuration_bert import BertConfig
 
 # Load DNABERT2 tokenizer and configuration
 tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNABERT-2-117M", trust_remote_code=True)
-from transformers.models.bert.configuration_bert import BertConfig
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
+config = BertConfig.from_pretrained("zhihan1996/DNABERT-2-117M")
 
-def bert_embedding(vecs, model_file):
-    # Set device
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
-    # Load model configuration and pretrained model
-    config = BertConfig.from_pretrained("zhihan1996/DNABERT-2-117M")
-    model = AutoModel.from_pretrained("PSUXL/LLMED-combined", trust_remote_code=True, config=config).to(device)
+# Load model
+model = AutoModel.from_pretrained("PSUXL/LLMED-MAE", trust_remote_code=True, config=config)
 
-    vecs = tokenizer(vecs, padding="longest", return_tensors="pt")
+dna = "AGAGCGACGACGTGTAGCAGCTGTACGACTGAGC"
 
-    embedding = []
-    for x, y in zip(vecs["input_ids"], vecs["attention_mask"]):
-        hidden = model(x.unsqueeze(0).to(device), attention_mask=y.unsqueeze(0).to(device))[0]
-        hidden = hidden.sum(axis=1) / y.sum(axis=-1).to(device)
-        embedding.extend(hidden.cpu().data.numpy())
-    
-    return np.array(embedding)
+# Get sequence embedding with mean pooling
+inputs = tokenizer(dna, return_tensors = 'pt')["input_ids"]
+hidden_states = model(inputs)[0] # [1, sequence_length, 768]
+embedding_mean = torch.mean(hidden_states[0], dim=0)
 ```
 
 ### Experiments

@@ -47,8 +47,9 @@ python3 main.py sampledata PSUXL/LLMED-MAE
 ```
 
 ### Similar Sequence Search
-This experiment demonstrates the model's ability to identify most similar sequences for a given input sequence. The code for this experiment can be found in the similar_sequence_search/ directory. We adopted the pipeline and code from Convolutional Embedding for Edit Distance and integrated our model into the workflow.
+This experiment demonstrates the model's ability to identify most similar sequences for a given input sequence. The code for this experiment can be found in the similar_sequence_search/ directory. We adopted the pipeline and code from [`Convolutional Embedding for Edit Distance`](https://github.com/xinyandai/string-embed) and integrated our model into the workflow.
 
 ```
+cd ./similar_sequence_search
 python3 main.py --dataset sampledata --nt 100 --nq 100 --save-split --recall --embed bert --model-dir PSUXL/LLMED-MAE
 ```

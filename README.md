@@ -33,21 +33,14 @@ hidden_states = model(inputs)[0] # [1, sequence_length, 768]
 embedding_mean = torch.mean(hidden_states[0], dim=0)
 ```
 
-### Experiments
+## Experiments
 The repository includes code for two experiments:
 
 
-## Correlation with Edit Distance
+### Correlation with Edit Distance
 This experiment evaluates the correlation between the model's sequence embeddings and the actual edit distance.
 The codes are at edit_distance/.
 
-## Similar Sequence Searching
-This experiment demonstrates the ability of the embeddings to retrieve similar sequences from a dataset efficiently.
-The codes are at similar_sequence_searching/.
-
-# ### Citation
-# If you use this code or the models in your research, please cite appropriately.
-
-# ### License
-# This project is licensed under the MIT License. See the LICENSE file for details.
-
+### Similar Sequence Search
+This experiment demonstrates the model's ability to identify top similar sequences for a given sequence.
+The codes are at similar_sequence_search/.
